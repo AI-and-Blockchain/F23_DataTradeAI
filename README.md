@@ -1,5 +1,3 @@
-
-
 ## Blockchain Architecture​
 ```
 IPFS approach will be used for storing documents ​
@@ -13,5 +11,8 @@ Once verified and added to the blockchain, the actual document will be stored on
 Documents can be retrieved by anyone with access rights by using the hash in the smart contract ​
 ```
 
+## ML pipeline
+![ML pipeline](/ML_pipeline.PNG?raw=true "Optional Title")
 
-![ML pipeline](/imgs/ml.jpg?raw=true "Optional Title")
+## Sequence Diagram
+![Sequence Diagram](/SequenceDiagram.pdf?raw=true "Optional Title")
