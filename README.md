@@ -12,7 +12,7 @@ Documents can be retrieved by anyone with access rights by using the hash in the
 ```
 
 ## ML pipeline
-![ML pipeline](/ML_pipeline.PNG?raw=true "Optional Title")
+![ML pipeline](/ML_pipeline.PNG?raw=true "ML pipeling")
 
 ## Sequence Diagram
-![Sequence Diagram](/SequenceDiagram.pdf?raw=true "Optional Title")
+![Sequence Diagram](/SequenceDiagram.png?raw=true "Sequence Diagram")
