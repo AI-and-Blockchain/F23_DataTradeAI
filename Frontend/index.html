@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Scholar AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <form>
+        <label for="upload">Upload Document:</label>
+        <input type="file" id="upload" name="upload">
+        <button type="button" onclick="uploadFile()">Upload</button><br><br>
+
+        <label for="view">View Document:</label>
+        <input type="text" id="view" name="view" placeholder="Enter document hash">
+        <button type="button" onclick="viewDocument()">View</button>
+    </form>
+</body>
+</html>
