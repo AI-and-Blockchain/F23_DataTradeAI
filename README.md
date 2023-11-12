@@ -1,4 +1,8 @@
-## Blockchain Architecture​
+## SecureScholar AI
+
+A system for uploading academic papers to a permissionless blockchain, ensuring decentralization. An AI plagiarism detector verifies originality, and papers are published using IPFS, promoting academic integrity, secure document sharing, and a decentralized approach to data storage.
+
+### Blockchain Architecture​
 ```
 IPFS approach will be used for storing documents ​
 
@@ -12,7 +16,7 @@ Documents can be retrieved by anyone with access rights by using the hash in the
 ```
 
 ## ML pipeline
-![ML pipeline](/ML_pipeline.PNG?raw=true "ML pipeling")
+![ML pipeline](/Diagrams/ML_pipeline.PNG?raw=true "ML pipeling")
 
 ## Sequence Diagram
-![Sequence Diagram](/SequenceDiagram.png?raw=true "Sequence Diagram")
+![Sequence Diagram](/Diagrams/SequenceDiagram.png?raw=true "Sequence Diagram")
