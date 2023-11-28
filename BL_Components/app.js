@@ -10,7 +10,7 @@ import { createLibp2p } from 'libp2p'
 import { identifyService } from 'libp2p/identify'
 import fs from 'fs/promises';
 
-// To run: npm install -> npm run
+// To run: npm install -> npm start
 
 // IPFS Storage
 async function createNode () {
