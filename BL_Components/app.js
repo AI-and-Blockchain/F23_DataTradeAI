@@ -8,7 +8,9 @@ import { MemoryDatastore } from 'datastore-core'
 import { createHelia } from 'helia'
 import { createLibp2p } from 'libp2p'
 import { identifyService } from 'libp2p/identify'
+import fs from 'fs/promises';
 
+// To run: npm install -> npm start
 
 // IPFS Storage
 async function createNode () {
@@ -57,37 +59,55 @@ async function createNode () {
   })
 }
 
-// create two helia nodes
-const node1 = await createNode()
-const node2 = await createNode()
-
-// connect them together
-const multiaddrs = node2.libp2p.getMultiaddrs()
-await node1.libp2p.dial(multiaddrs[0])
-
-// create a filesystem on top of Helia, in this case it's UnixFS
-const fs = unixfs(node1)
-
-// we will use this TextEncoder to turn strings into Uint8Arrays
-const encoder = new TextEncoder()
-
-// add the bytes to your node and receive a unique content identifier
-const cid = await fs.addBytes(encoder.encode('Hello World 301'))
-
-console.log('Added file:', cid.toString())
-
-// create a filesystem on top of the second Helia node
-const fs2 = unixfs(node2)
-
-// this decoder will turn Uint8Arrays into strings
-const decoder = new TextDecoder()
-let text = ''
-
-// use the second Helia node to fetch the file from the first Helia node
-for await (const chunk of fs2.cat(cid)) {
-  text += decoder.decode(chunk, {
-    stream: true
-  })
+// Function to read the content of a text file
+async function readFileContent(filePath) {
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    return content;
+  } catch (error) {
+    console.error('Error reading file:', error);
+    throw error;
+  }
 }
 
-console.log('Fetched file contents:', text)
+// Main function
+(async () => {
+  // create two helia nodes
+  const node1 = await createNode();
+  const node2 = await createNode();
+
+  // connect them together
+  const multiaddrs = node2.libp2p.getMultiaddrs();
+  await node1.libp2p.dial(multiaddrs[0]);
+
+  // create a filesystem on top of Helia, in this case it's UnixFS
+  const fs1 = unixfs(node1);
+
+  // extract text from uploaded file
+  const filePath = 'txt.txt'; // Replace with the actual path to your text file
+  const fileContent = await readFileContent(filePath);
+
+  // we will use this TextEncoder to turn strings into Uint8Arrays
+  const encoder = new TextEncoder();
+
+  // add the bytes to your node and receive a unique content identifier
+  const cid = await fs1.addBytes(encoder.encode(fileContent));
+
+  console.log('Added file:', cid.toString());
+
+  // create a filesystem on top of the second Helia node
+  const fs2 = unixfs(node2);
+
+  // this decoder will turn Uint8Arrays into strings
+  const decoder = new TextDecoder();
+  let text = '';
+
+  // use the second Helia node to fetch the file from the first Helia node
+  for await (const chunk of fs2.cat(cid)) {
+    text += decoder.decode(chunk, {
+      stream: true
+    });
+  }
+
+  console.log('Fetched file contents:', text);
+})();
