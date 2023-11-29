@@ -20,3 +20,4 @@ Documents can be retrieved by anyone with access rights by using the hash in the
 
 ## Sequence Diagram
 ![Sequence Diagram](/Diagrams/SequenceDiagram.png?raw=true "Sequence Diagram")
+
