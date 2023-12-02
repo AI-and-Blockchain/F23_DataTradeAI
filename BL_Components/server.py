@@ -2,6 +2,7 @@ from web3 import Web3
 import ipfshttpclient
 from preprocessing import preprocess
 import pickle
+from contract.abi.json import contractAbi
 import numpy as np
 import pandas as pd
 
@@ -10,108 +11,13 @@ current_gas_price = web3.eth.gas_price
 print(f"Current Gas Price: {current_gas_price} wei")
 
 # Set the contract addresses
-ml_contract_address = '0xF00Ff2148B4AAd677909cF9721310501C74eb388'
+ml_contract_address = '0xd9145CCE52D386f254917e481eB44e9943F39138'
 sender_account = '0x01f6fFa903e598C62a93092Bba5599367EfEfa4f'
 
 nonce = web3.eth.get_transaction_count(sender_account)
 
-ml_contract_abi = [
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": False,
-		"inputs": [
-			{
-				"indexed": False,
-				"internalType": "uint256",
-				"name": "inputData",
-				"type": "uint256"
-			},
-			{
-				"indexed": False,
-				"internalType": "uint256",
-				"name": "modelOutput",
-				"type": "uint256"
-			}
-		],
-		"name": "DataReceived",
-		"type": "event"
-	},
-	{
-		"anonymous": False,
-		"inputs": [
-			{
-				"indexed": False,
-				"internalType": "uint256",
-				"name": "inputData",
-				"type": "uint256"
-			},
-			{
-				"indexed": False,
-				"internalType": "uint256",
-				"name": "modelOutput",
-				"type": "uint256"
-			}
-		],
-		"name": "DataSent",
-		"type": "event"
-	},
-	{
-		"anonymous": False,
-		"inputs": [
-			{
-				"indexed": False,
-				"internalType": "uint256",
-				"name": "modelOutput",
-				"type": "uint256"
-			}
-		],
-		"name": "ModelOutputReceived",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_modelOutput",
-				"type": "uint256"
-			}
-		],
-		"name": "recOutput",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "inputData",
-				"type": "uint256"
-			}
-		],
-		"name": "sendInput",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
-]
+ml_contract_abi = contractAbi
+
 ml_contract = web3.eth.contract(address=web3.to_checksum_address(ml_contract_address), abi=ml_contract_abi)
 
 def send(model_result, hash):
