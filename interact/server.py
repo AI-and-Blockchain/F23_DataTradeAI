@@ -114,9 +114,9 @@ ml_contract_abi = [
 ]
 ml_contract = web3.eth.contract(address=web3.to_checksum_address(ml_contract_address), abi=ml_contract_abi)
 
-def send(model_result):
+def send(model_result, hash):
     # Build transaction
-    transaction = ml_contract.functions.recOutput(model_result).buildTransaction({
+    transaction = ml_contract.functions.recOutput(model_result, hash).buildTransaction({
         'from': sender_account,
         'gas': 200000,
         'gasPrice': web3.toWei('20', 'gwei'),
@@ -154,7 +154,7 @@ def receive():
                 data = pd.DataFrame(d, columns = ['Phrase','Suspicious','Class'])
                 X,_,_ = preprocess(data)
                 prediction = sum(model.predict(X))
-                send_model_result_to_ml_contract(prediction)
+                send(prediction, hash)
             except Exception as e:
                 print(f"Error: {e}")
                 return str(-1)'''
