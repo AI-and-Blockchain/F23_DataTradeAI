@@ -19,6 +19,7 @@ contract DocumentRegistry {
         require(documents[ipfsHash].owner == address(0), "Document already exists");
         emit DataSent(ipfsHash, hash_, 0);
     }
+    
     function recOutput(uint256 _modelOutput, string calldata ipfsHash) external {
         emit ModelOutputReceived(_modelOutput, ipfsHash);
         require(_modelOutput != 1, "Document is plagiarized and cannot be accepted.");
