@@ -10,7 +10,7 @@ import { createLibp2p } from 'libp2p'
 import { identifyService } from 'libp2p/identify'
 import fs from 'fs/promises';
 
-// To run: npm install -> npm start
+// To run: npm install -> npm start {your_file.txt}
 
 // IPFS Storage
 async function createNode () {
@@ -84,7 +84,7 @@ async function readFileContent(filePath) {
   const fs1 = unixfs(node1);
 
   // extract text from uploaded file
-  const filePath = 'txt.txt'; // Replace with the actual path to your text file
+  const filePath = process.argv[2]; // Replace with the actual path to your text file
   const fileContent = await readFileContent(filePath);
 
   // we will use this TextEncoder to turn strings into Uint8Arrays
@@ -109,5 +109,5 @@ async function readFileContent(filePath) {
     });
   }
 
-  console.log('Fetched file contents:', text);
+  // console.log('Fetched file contents:', text);
 })();

@@ -1,5 +1,5 @@
 IPFS Storage
-- To run: npm install -> npm start
+- To run: npm install -> npm start {your_file.txt}
 
 Smart Contract are responsible for:
 - Stores hash for the IPFS url of the text document

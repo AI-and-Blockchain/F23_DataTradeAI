@@ -3,6 +3,31 @@
 		"anonymous": false,
 		"inputs": [
 			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "newDoc",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string[]",
+				"name": "allDocs",
+				"type": "string[]"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "modelOutput",
+				"type": "uint256"
+			}
+		],
+		"name": "DataSent",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
 				"indexed": true,
 				"internalType": "address",
 				"name": "owner",
@@ -17,6 +42,56 @@
 		],
 		"name": "DocumentUploaded",
 		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "modelOutput",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "ipfsHash",
+				"type": "string"
+			}
+		],
+		"name": "ModelOutputReceived",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_modelOutput",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "ipfsHash",
+				"type": "string"
+			}
+		],
+		"name": "recOutput",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "ipfsHash",
+				"type": "string"
+			}
+		],
+		"name": "uploadInitDocs",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	},
 	{
 		"inputs": [

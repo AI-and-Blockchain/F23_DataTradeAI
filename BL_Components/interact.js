@@ -1,5 +1,5 @@
 const Web3 = require('web3');
-const contractAddress = "0x42eFB830A90323f60c5767d91a50848f5D7804B5"; // Replace with the actual deployed contract address
+const contractAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138"; // Replace with the actual deployed contract address
 import contractAbi from '../contract.abi.json'
 
 // Create an instance of web3 using the injected provider (e.g., MetaMask)
@@ -23,4 +23,16 @@ async function uploadFile() {
   } catch (error) {
     console.error(error);
   }
+}
+  async function uploadInitFile() {
+    try {
+      // Call the 'uploadInitDocs' function of the smart contract
+      await ssaContract.methods.uploadInitDocs(IPFSHash).send({ from: web3.eth.defaultAccount });
+  
+      const documentContent = await ssaContract.methods.getLatestIPFSHash().call();
+      const contentDisplay = document.querySelector(`ftext`);
+      contentDisplay.textContent = `${documentContent} votes`;
+    } catch (error) {
+      console.error(error);
+    }
 }
