@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+print(os.getcwd())
 from preprocessing import preprocess
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -9,11 +11,13 @@ from flask import Flask
 from flask import request
 import numpy as np
 import random
+from flask import jsonify
+import ast
 ##idk why i never pushed this to the repo...
 
 data = pd.read_csv("./Dataset/train_snli.csv",sep = "\t",header=0,names = ['Phrase','Suspicious','Class'])
 #data provided by https://www.kaggle.com/code/mpwolke/plagiarism-mit-detection
-data = data.dropna()[:4000]
+data = data.dropna()[:10]
 
 X,y,vocab = preprocess(data)
 
@@ -63,9 +67,21 @@ print(classification_rep)
 
 pickle.dump(tree_model, open("./trained_models/decision_tree.sav", 'wb'))
 
+app = Flask(__name__)
 
-#analysis
+@app.route('/isAlive')
+def index():
+    return "true"
 
-#find most important features (word chunks) for detecting plagiarism:
-l=np.argsort(tree_model.feature_importances_)[-10:]
-important_phrase = np.array(list(vocab.keys()))[l]
+@app.route('/prediction/api/v1.0/some_prediction', methods=['GET'])
+def get_prediction():
+    feature1 = float(request.args.get('f1'))
+    feature2 = float(request.args.get('f2'))
+    feature3 = float(request.args.get('f3'))
+    loaded_model = pickle.load(open('some_model.pkl', 'rb'))
+    prediction = loaded_model.predict([[feature1, feature2, feature3]])
+    return jsonify({"result" : ast.literal_eval(str(prediction[0]))})
+   
+if __name__ == '__main__':
+    app.run(port=5001,host='0.0.0.0')        
+    #app.run(debug=True)
