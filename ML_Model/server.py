@@ -2,13 +2,10 @@ from web3 import Web3
 import ipfshttpclient
 from preprocessing import preprocess
 import pickle
-import json
+from contract.abi.json import contractAbi
 import numpy as np
 import pandas as pd
-import sys
 
-with open('contract.abi.json') as json_file:
-    contractAbi = json.load(json_file)
 # Connect to infura API
 web3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/621e6514991e48c5bfc09930b9e09c6e')) 
 current_gas_price = web3.eth.gas_price
