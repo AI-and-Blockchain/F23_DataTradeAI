@@ -1,6 +1,9 @@
-contract==1.4
+contract
 ipfshttpclient==0.7.0
 numpy==1.26.2
 pandas==2.1.3
 preprocessing==0.1.13
 web3==6.11.4
+matplotlib==3.8.1
+scikit_learn==1.3.2
+spacy==3.7.2

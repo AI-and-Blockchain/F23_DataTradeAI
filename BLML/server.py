@@ -5,6 +5,7 @@ import pickle
 from contract.abi.json import contractAbi
 import numpy as np
 import pandas as pd
+import sys
 
 # Connect to infura API
 web3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/621e6514991e48c5bfc09930b9e09c6e')) 

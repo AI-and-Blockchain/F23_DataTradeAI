@@ -8,10 +8,11 @@ import { MemoryDatastore } from 'datastore-core'
 import { createHelia } from 'helia'
 import { createLibp2p } from 'libp2p'
 import { identifyService } from 'libp2p/identify'
-import { spawner } from 'child_process'
-import fs from 'fs/promises';
+import { spawn } from 'child_process'
+import express from 'express'
+import fs from 'fs/promises'
 
-// To run: npm install -> npm start {your_file.txt}
+// To run: npm install -> pip install -r requirements.txt -> npm start {your_file.txt}
 
 // IPFS Storage
 async function createNode () {
@@ -94,10 +95,26 @@ async function readFileContent(filePath) {
   // add the bytes to your node and receive a unique content identifier
   const cid = await fs1.addBytes(encoder.encode(fileContent));
 
+  // express components
+  const app = express();
+
+  app.get('/', (req, res) => {
+    res.send(cid.toString());
+  });
+
+  app.listen(3000, () =>
+    console.log('Example app listening on port 3000!'),
+  );
+
+  let spawner = spawn('python', ["./server.py", cid.toString])
+
+  spawner.stdout.on('data', function(data) { 
+    res.send(data.toString()); 
+  } )   
+
   console.log('Added file:', cid.toString());
 
   // calls script for ML
-  spawner('python', ['./server.py', cid.toString()])
 
   // create a filesystem on top of the second Helia node
   const fs2 = unixfs(node2);
@@ -113,5 +130,5 @@ async function readFileContent(filePath) {
     });
   }
 
-  // console.log('Fetched file contents:', text);
+  console.log('Fetched file contents:', text);
 })();
