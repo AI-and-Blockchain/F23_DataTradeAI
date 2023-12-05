@@ -8,6 +8,7 @@ import { MemoryDatastore } from 'datastore-core'
 import { createHelia } from 'helia'
 import { createLibp2p } from 'libp2p'
 import { identifyService } from 'libp2p/identify'
+import { spawner } from 'child_process'
 import fs from 'fs/promises';
 
 // To run: npm install -> npm start {your_file.txt}
@@ -94,6 +95,9 @@ async function readFileContent(filePath) {
   const cid = await fs1.addBytes(encoder.encode(fileContent));
 
   console.log('Added file:', cid.toString());
+
+  // calls script for ML
+  spawner('python', ['./server.py', cid.toString()])
 
   // create a filesystem on top of the second Helia node
   const fs2 = unixfs(node2);
