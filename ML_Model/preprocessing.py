@@ -5,6 +5,14 @@ import numpy as np
 import pandas as pd
 
 def preprocess(data):
+    """Vectorizes documents
+
+    Args:
+        data (DataFrame): Contains two document columns and one class column
+
+    Returns:
+        np.matrix, np.array, spmatrix: X, y, and resultant vectors
+    """
     # Load English dictionary
     nlp = spacy.load('en_core_web_sm')
     
