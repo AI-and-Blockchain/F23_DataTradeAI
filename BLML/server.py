@@ -62,7 +62,7 @@ def receive():
             # Once event is detected, begins prediction
             received_data = event['args']['inputData']
             print(f"Received data from Oracle: {received_data}")
-            '''try:
+            try:
                 hashs = list(request.args.getlist('hash_list'))
                 documents = []
                 for hash in hashs: #retrieve documents
@@ -80,7 +80,7 @@ def receive():
                 send(prediction, hash)
             except Exception as e:
                 print(f"Error: {e}")
-                return str(-1)'''
+                send(-1, hash)
 
 #Get from ipfs
 def get_doc(ipfs_hash):
