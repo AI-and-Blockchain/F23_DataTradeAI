@@ -7,6 +7,7 @@ contract DocumentRegistry {
         string ipfsHash;
     }
 
+    address public owner;
     mapping(string => Document) public documents;
     string[] internal hash_;
     string public latestIPFSHash;
@@ -36,7 +37,7 @@ contract DocumentRegistry {
     }
 
     function uploadInitDocs(string memory ipfsHash) public {
-        require(documents[ipfsHash].owner == address(0), "Document already exists");
+        require(owner == address(0), "Init docs may only be uploaded by owner");
         documents[ipfsHash] = Document(msg.sender, ipfsHash);
         hash_.push(ipfsHash);
         latestIPFSHash = ipfsHash; // Update latest IPFS hash

@@ -63,11 +63,11 @@ def receive():
             received_data = event['args']['inputData']
             print(f"Received data from Oracle: {received_data}")
             try:
-                hashs = list(request.args.getlist('hash_list'))
+                hashs = list(event.args.getlist('hash_list'))
                 documents = []
                 for hash in hashs: #retrieve documents
                     documents.append(get_doc(hash))
-                sus_document = str(get_doc(request.args.get('doc_hash')))
+                sus_document = str(get_doc(event.args.get('doc_hash')))
                 model = pickle.load(open('../ML_Model/decision_tree.sav', 'rb'))
                 #data processing for model
                 sus = np.array([sus_document]*len(documents)).reshape(-1,1)
