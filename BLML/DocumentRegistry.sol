@@ -37,7 +37,7 @@ contract DocumentRegistry {
     }
 
     function uploadInitDocs(string memory ipfsHash) public {
-        require(owner == address(0), "Init docs may only be uploaded by owner");
+        require(owner == msg.sender, "Init docs may only be uploaded by owner");
         documents[ipfsHash] = Document(msg.sender, ipfsHash);
         hash_.push(ipfsHash);
         latestIPFSHash = ipfsHash; // Update latest IPFS hash
